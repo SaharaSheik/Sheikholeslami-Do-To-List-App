@@ -1,0 +1,95 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+class ToDoListMain{
+    main()
+    start()
+}
+
+class EditItemPageController {
+
++changeItemDueDate(ActionEvent actionEvent) : void
++getItemDescription(ActionEvent actionEvent): void
++ editItemDescription(ActionEvent actionEvent) : void
+
+}
+
+class DisplayCompletedController {
+
++loadCompletedList(ActionEvent actionEvent)
+}
+
+class Item{
+ String itemDescription;
+ Date dueDate ;
+ Boolean itemDone;
+
+ + getItemDescription() : String
+ + setItemDescription(String itemDescription) : void
+ +Date getDueDate() : Date
+ + setDueDate(Date dueDate) : void
+ + setItemDone(Boolean itemDone): void
+
+
+}
+
+
+class DisplayAllController {
++loadCompleteList(ActionEvent actionEvent) : void
+}
+
+
+class DisplayIncompletedListController {
++loadIncompleteList(ActionEvent actionEvent): void
+}
+
+class ToDo {
+
+    String toDoDescription;
+    ArrayList<Item> itemList = new ArrayList<Item>();
+    + String getToDoDescription() : String
+    + setToDoDescription(String toDoDescription) : void
+    + ArrayList<Item> getItemList() : ArrayList<Item>
+    +  setItemList(Item newItem) : void
+
+}
+
+class ToDoListController {
++ getNameOfToDoList(ActionEvent actionEvent) : void
++ toDoListNewPage(ActionEvent actionEvent) : void
++  void addNewToDoList(ActionEvent actionEvent) : void
++ ToDo AddToDo (): ToDo
+}
+
+class ToDoListPageController {
++ modifyListName(ActionEvent actionEvent): void
++ displayOptions(ActionEvent actionEvent): void
++ addItemtoList(ActionEvent actionEvent): void
++ addItemName(ActionEvent actionEvent) : void
++ addItemDueDate(ActionEvent actionEvent): void
++ displayItem (ActionEvent actionEvent): void
++  deletItem(ActionEvent actionEvent): void
++ SaveLocalStirage(ToDo todo) : void
++ markItemAsDone(ActionEvent actionEvent) :void
++ deleteEntireToDoList(ActionEvent actionEvent): void
++ saveList(ActionEvent actionEvent) : void
++ openEditItemPage(ActionEvent actionEvent): void
++  displayAll(ActionEvent actionEvent): void
++ displayCompleted(ActionEvent actionEvent): void
++ displayIncomplete(ActionEvent actionEvent): void
+
+
+
+}
+
+javafx.Application <|-- ToDoListMain
+ToDoListController -- ToDoListMain
+ToDoListController - ToDo
+ToDo -- Item
+DisplayAllController - EditItemPageController
+DisplayCompletedController - EditItemPageController
+DisplayIncompletedListController - EditItemPageController
+EditItemPageController -- ToDoListPageController
+ToDoListPageController -- ToDoListController
+
+@enduml

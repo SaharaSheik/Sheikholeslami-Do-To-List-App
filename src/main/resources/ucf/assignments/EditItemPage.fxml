@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #42A5F5;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucf.assignments.EditItemPageController">
+   <children>
+      <DatePicker fx:id="changeItemDueDate" layoutX="112.0" layoutY="224.0" onAction="#changeItemDueDate" />
+      <Text fill="WHITE" layoutX="131.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Change Due Date">
+         <font>
+            <Font name="Century Gothic" size="15.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="107.0" layoutY="374.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Change Item Description">
+         <font>
+            <Font name="Century Gothic" size="15.0" />
+         </font>
+      </Text>
+      <AnchorPane layoutX="-2.0" prefHeight="129.0" prefWidth="400.0" style="-fx-background-color: #E3F2FD;">
+         <children>
+            <TextField fx:id="getItemDescription" layoutX="43.0" layoutY="52.0" onAction="#getItemDescription" prefHeight="25.0" prefWidth="175.0" />
+         </children>
+      </AnchorPane>
+      <TextField fx:id="editItemDescription" layoutX="108.0" layoutY="320.0" onAction="#editItemDescription" prefHeight="25.0" prefWidth="182.0" promptText="Edit Item Description">
+         <font>
+            <Font name="Century Gothic" size="15.0" />
+         </font>
+      </TextField>
+   </children>
+</AnchorPane>

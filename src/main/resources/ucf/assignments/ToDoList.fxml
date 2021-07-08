@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #42A5F5;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucf.assignments.ToDoListController">
+   <children>
+      <Label layoutX="50.0" layoutY="31.0" text="To Do List App" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic Bold" size="45.0" />
+         </font>
+      </Label>
+      <Label layoutX="50.0" layoutY="145.0" text="My List" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic Bold" size="26.0" />
+         </font>
+      </Label>
+      <TextField fx:id="getNameOfToDoList" layoutX="50.0" layoutY="199.0" onAction="#getNameOfToDoList" prefHeight="25.0" prefWidth="265.0" promptText="Type your to-do list name">
+         <font>
+            <Font name="Century Gothic" size="12.0" />
+         </font>
+      </TextField>
+      <Button fx:id="addNewToDoList" layoutX="323.0" layoutY="212.0" mnemonicParsing="false" onAction="#addNewToDoList" prefHeight="33.0" prefWidth="44.0" style="-fx-background-color: #42A5F5;" />
+      <Text fx:id="printNameofToDoList" fill="WHITE" layoutX="50.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="List Name_____________" underline="true" wrappingWidth="265.3333333333335">
+         <font>
+            <Font name="Century Gothic" size="23.0" />
+         </font>
+      </Text>
+      <Button fx:id="toDoListNewPage" layoutX="324.0" layoutY="233.0" mnemonicParsing="false" onAction="#toDoListNewPage" prefHeight="33.0" prefWidth="40.0" style="-fx-background-color: #42A5F5;">
+         <graphic>
+            <ImageView fitHeight="34.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/baseline_open_in_new_white_48dp.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="saveAllLists" layoutX="163.0" layoutY="490.0" mnemonicParsing="false" onAction="#saveAllLists" prefHeight="33.0" prefWidth="50.0" style="-fx-background-color: #42A5F5;">
+         <graphic>
+            <ImageView fitHeight="59.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/baseline_favorite_border_white_48dp.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Text fill="WHITE" layoutX="158.0" layoutY="572.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Save All Lists">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <ListView fx:id="displayList" layoutX="39.0" layoutY="322.0" prefHeight="168.0" prefWidth="323.0" style="-fx-background-color: #42A5F5;" />
+      <ImageView fitHeight="44.0" fitWidth="53.0" layoutX="327.0" layoutY="189.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../icons/baseline_add_white_24dp.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="viewList" layoutX="174.0" layoutY="287.0" mnemonicParsing="false" onAction="#viewList" text="View List" />
+   </children>
+</AnchorPane>
