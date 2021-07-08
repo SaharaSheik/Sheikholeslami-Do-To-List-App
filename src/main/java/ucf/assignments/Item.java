@@ -5,6 +5,82 @@
 
 package ucf.assignments;
 
+
+
+import java.io.Serializable;
+import java.time.LocalDate;
+
+
+@SuppressWarnings("serial")
+public class Item implements Serializable
+{
+    private LocalDate dueDate;
+    private String itemDescription;
+    private boolean completed;
+    private boolean notCompleted;
+
+    public Item (String itemDescription, LocalDate dueDate, boolean notCompleted)
+    {
+        this.itemDescription = itemDescription;
+        this.dueDate = dueDate;
+        this.completed = false;
+        this.notCompleted = true;
+    }
+
+    @Override
+    public String toString()
+    {
+        String[] dateArray = null;
+        if(dueDate != null)
+        dateArray = dueDate.toString().split("-");
+
+        return itemDescription + dateArray[0] + "-"+ dateArray[1] + "-" +  dateArray[2];
+
+    }
+
+
+    public LocalDate getDueDate()
+    {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate)
+    {
+        this.dueDate = dueDate;
+    }
+
+    public String getItemDescription()
+    {
+        return itemDescription;
+    }
+
+    public void setItemDescription(String itemDescription)
+    {
+        this.itemDescription = itemDescription;
+    }
+
+    public boolean Completed()
+    {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed)
+    {
+        this.completed = completed;
+    }
+
+    public boolean notCompleted()
+    {
+        return completed;
+    }
+
+    public void setNotCompleted(boolean notCompleted)
+    {
+        this.notCompleted = notCompleted;
+    }
+}
+
+/*
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -47,3 +123,4 @@ public class Item {
         //this.itemDone == itemDone ToDoListPage
     }
 }
+*/

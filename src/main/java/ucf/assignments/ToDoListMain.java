@@ -27,7 +27,7 @@ public class ToDoListMain extends Application {
             Parent root = FXMLLoader.load(getClass().getResource("ToDoList.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
-            primaryStage.setTitle("ToDo");
+            primaryStage.setTitle("To Do List App");
             primaryStage.show();
 
         } catch (IOException e) {
