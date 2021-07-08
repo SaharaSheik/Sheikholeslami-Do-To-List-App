@@ -23,13 +23,16 @@ public class ToDoListMain extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        // parent root is the ToDoListPage file
+        //create a new scene
+        //attach the root to the scene
 
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ToDoListPage.fxml")));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setTitle("To Do App");
-            primaryStage.setResizable(false);
+           // primaryStage.setResizable(false);
             primaryStage.show();
 
         } catch (IOException e) {
