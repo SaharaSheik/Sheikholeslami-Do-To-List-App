@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 
 public class ToDoListMain extends Application {
@@ -24,10 +25,11 @@ public class ToDoListMain extends Application {
     public void start(Stage primaryStage) {
 
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("ToDoList.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ToDoListPage.fxml")));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
-            primaryStage.setTitle("To Do List App");
+            primaryStage.setTitle("To Do App");
+            primaryStage.setResizable(false);
             primaryStage.show();
 
         } catch (IOException e) {

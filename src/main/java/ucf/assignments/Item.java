@@ -6,96 +6,23 @@
 package ucf.assignments;
 
 
-
 import java.io.Serializable;
-import java.time.LocalDate;
-
-
-@SuppressWarnings("serial")
-public class Item implements Serializable
-{
-    private LocalDate dueDate;
-    private String itemDescription;
-    private boolean completed;
-    private boolean notCompleted;
-
-    public Item (String itemDescription, LocalDate dueDate, boolean notCompleted)
-    {
-        this.itemDescription = itemDescription;
-        this.dueDate = dueDate;
-        this.completed = false;
-        this.notCompleted = true;
-    }
-
-    @Override
-    public String toString()
-    {
-        String[] dateArray = null;
-        if(dueDate != null)
-        dateArray = dueDate.toString().split("-");
-
-        return itemDescription + dateArray[0] + "-"+ dateArray[1] + "-" +  dateArray[2];
-
-    }
-
-
-    public LocalDate getDueDate()
-    {
-        return dueDate;
-    }
-
-    public void setDueDate(LocalDate dueDate)
-    {
-        this.dueDate = dueDate;
-    }
-
-    public String getItemDescription()
-    {
-        return itemDescription;
-    }
-
-    public void setItemDescription(String itemDescription)
-    {
-        this.itemDescription = itemDescription;
-    }
-
-    public boolean Completed()
-    {
-        return completed;
-    }
-
-    public void setCompleted(boolean completed)
-    {
-        this.completed = completed;
-    }
-
-    public boolean notCompleted()
-    {
-        return completed;
-    }
-
-    public void setNotCompleted(boolean notCompleted)
-    {
-        this.notCompleted = notCompleted;
-    }
-}
-
-/*
 import java.text.DateFormat;
 import java.util.Date;
 
-public class Item {
+public class Item implements Serializable {
 
-    // each item object will have 3 filed, an item desc, due date, boolean itemdone
-
-    String itemDescription;
-    Date dueDate = new Date();
-
+    // each item object will have 3 filed, an item desc, due date, boolean Itemdone
     // boolean itemDone will always automatically be set to false
     // when the users click on markItemAsDone button in ToDoListPage this value will change to true
+
+    String itemDescription;
+    String dueDate;
     Boolean itemDone = false;
 
+    public Item(){
 
+    }
     public String getItemDescription() {
         return itemDescription;
     }
@@ -103,24 +30,40 @@ public class Item {
     public void setItemDescription(String itemDescription) {
 
         // use keyword this. to set the item Description from text field additemName GUI
-         //this.itemDescription == itemDescription ToDoListPage
+        //this.itemDescription == itemDescription ToDoListPage
+        this.itemDescription = itemDescription;
     }
 
-    public Date getDueDate() {
+    public String getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
-
+    public void setDueDate(String dueDate) {
         // use keyword this. to set the due date from date filed addItemDueDate GUI
-
-       // this.dueDate == dueDate in ToDoListPage
+        // this.dueDate == dueDate in ToDoListPage
+        this.dueDate = dueDate;
     }
 
     public void setItemDone(Boolean itemDone) {
-
         // use keyword this. to set the itemDone from markItemAsDone button in  ToDoListPage GUI
         //this.itemDone == itemDone ToDoListPage
+        this.itemDone = itemDone;
+    }
+
+    public Boolean getItemDone() {
+        return itemDone;
+    }
+
+    @Override
+    public String toString() {
+
+        // if get itemDone is set to True -> item is complete
+        // if get itemDone is set to false -> items is incomplete
+
+        if(getItemDone()){
+            return itemDescription + "\n" + dueDate + "\n" + "Complete";
+        }else{
+            return itemDescription + "\n" + dueDate + "\n" + "Incomplete";
+        }
     }
 }
-*/
