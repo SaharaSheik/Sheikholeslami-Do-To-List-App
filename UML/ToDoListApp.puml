@@ -7,18 +7,48 @@ class ToDoListMain{
 }
 
 class Item{
- String itemDescription;
- Date dueDate ;
- Boolean itemDone;
+ #String itemDescription;
+ #Date dueDate ;
+ #Boolean itemDone;
 
 +Item()
- + getItemDescription() : String
- + setItemDescription(String itemDescription) : void
- +Date getDueDate() : Date
- + setDueDate(Date dueDate) : void
- + setItemDone(Boolean itemDone): void
++ getItemDescription() : String
++ setItemDescription(String itemDescription) : void
++ Date getDueDate() : String dueDate
++ setDueDate(String dueDate) : void
++ setItemDone(Boolean itemDone): void
++ getItemDone(): Boolean
++ toString(): String
+}
+
+
+class ToDoListPageController {
+-TextField itemName
+-DatePicker itemDueDate
+-ListView<Item> itemListView
+-TextField displayItem
+
++initialize(URL url, ResourceBundle rb): void
++addItem(): void
++chooseItem(): void
++deleteList(): void
++checkItemDone(): void
++deleteItem(): void
++editItem(): void
++saveList(): void
++displayAll(): void
++displayCompleted(ActionEvent actionEvent): void
++displayIncomplete(): void
+-showHelp(): void
+-showErrorAlert(String title, String text): void
+-showSuccessAlert(String title, String text): void
++sortItems(): void
++saveItemList(List<Item> item_list): void
++oadItems(): List<Item>
+
 
 }
+
 
 class EditItemPageController {
 
@@ -33,43 +63,33 @@ class EditItemPageController {
 
 }
 
+class DisplayController {
 
-
-
-
-
-class ToDoListPageController {
-+ modifyListName(ActionEvent actionEvent): void
-+ displayOptions(ActionEvent actionEvent): void
-+ addItemtoList(ActionEvent actionEvent): void
-+ addItemName(ActionEvent actionEvent) : void
-+ addItemDueDate(ActionEvent actionEvent): void
-+ displayItem (ActionEvent actionEvent): void
-+  deletItem(ActionEvent actionEvent): void
-+ SaveLocalStirage(ToDo todo) : void
-+ markItemAsDone(ActionEvent actionEvent) :void
-+ deleteEntireToDoList(ActionEvent actionEvent): void
-+ saveList(ActionEvent actionEvent) : void
-+ openEditItemPage(ActionEvent actionEvent): void
-+  displayAll(ActionEvent actionEvent): void
-+ displayCompleted(ActionEvent actionEvent): void
-+ displayIncomplete(ActionEvent actionEvent): void
-
-
+#ListView<Item> dispplayAllitems;
++loadItems(List<Item> items): void
 
 }
+class HelpController{
+#TextArea helpVie
++initialize(URL url, ResourceBundle resourceBundle): void
+-loadHelp():void
+}
+
+
 
 javafx.Application <|-- ToDoListMain
 java.io.Serializable<|--Item
-javafx.Initializable<|--EditItemPageController
-ToDoListPageController -- ToDoListMain
+javafx.Initializable<|--ToDoListPageController
+javafx.Initializable<|-EditItemPageController
+javafx.Initializable<|--HelpController
+ToDoListPageController - ToDoListMain
 Item<-EditItemPageController
-Item<-ToDoListPageController
+Item<--ToDoListPageController
+ToDoListPageController-EditItemPageController
+ToDoListPageController-- DisplayController
+Item<- DisplayController
+ToDoListPageController-HelpController
 
-DisplayAllController - EditItemPageController
-DisplayCompletedController - EditItemPageController
-DisplayIncompletedListController - EditItemPageController
-EditItemPageController -- ToDoListPageController
-ToDoListPageController -- ToDoListController
+
 
 @enduml

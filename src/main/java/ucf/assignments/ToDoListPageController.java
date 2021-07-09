@@ -6,7 +6,7 @@
 package ucf.assignments;
 
 
-import javafx.collections.ObservableList;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,12 +14,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.skin.VirtualFlow;
-import javafx.scene.image.ImageView;
-import javafx.scene.text.Font;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+
 
 import java.io.*;
 import java.net.URL;
@@ -42,7 +38,7 @@ public class ToDoListPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // create a list of item objects
+        // create a list of Item objects
         List<Item> items = loadItems();
         if(items != null){
             itemListView.getItems().addAll(items);
