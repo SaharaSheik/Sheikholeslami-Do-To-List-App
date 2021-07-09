@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -12,103 +13,92 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #42A5F5;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucf.assignments.ToDoListPageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="400.0" style="-fx-background-color: #42A5F5;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucf.assignments.ToDoListPageController">
    <children>
-      <AnchorPane prefHeight="129.0" prefWidth="400.0" style="-fx-background-color: #E3F2FD;">
-         <children>
-            <TextField fx:id="modifyListName" layoutX="47.0" layoutY="50.0" onAction="#modifyListName" prefHeight="37.0" prefWidth="187.0" />
-            <MenuButton fx:id="displayOptions" layoutX="250.0" layoutY="49.0" mnemonicParsing="false" onAction="#displayOptions" prefHeight="29.0" prefWidth="78.0" style="-fx-background-color: #42A5F5;" textFill="WHITE">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-                <MenuItem mnemonicParsing="false" text="Action 2" />
-              </items>
-               <font>
-                  <Font name="Century Gothic Bold" size="12.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="29.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../icons/baseline_sort_white_48dp.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </MenuButton>
-         </children>
-      </AnchorPane>
-      <Button fx:id="addItemtoList" layoutX="172.0" layoutY="246.0" mnemonicParsing="false" onAction="#addItemtoList" prefHeight="46.0" prefWidth="55.0" style="-fx-background-color: #42A5F5;">
-         <graphic>
-            <ImageView fitHeight="29.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../icons/baseline_add_white_24dp.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <DatePicker fx:id="addItemDueDate" layoutX="111.0" layoutY="208.0" onAction="#addItemDueDate" promptText="Select a due date" style="-fx-background-color: #FFFFFF; -fx-border-color: #FFFFFF;" />
-      <TextField fx:id="additemName" layoutX="111.0" layoutY="171.0" onAction="#addItemName" promptText="Enter new item" style="-fx-background-color: #FFFFFF;">
+      <DatePicker fx:id="itemDueDate" editable="false" layoutX="61.0" layoutY="146.0" prefHeight="27.0" prefWidth="268.0" promptText="Select a due date" style="-fx-background-color: #FFFFFF; -fx-border-color: #FFFFFF;" />
+      <TextField fx:id="itemName" layoutX="61.0" layoutY="106.0" prefHeight="30.0" prefWidth="268.0" promptText="Enter new item" style="-fx-background-color: #FFFFFF;">
          <font>
             <Font name="Century Gothic" size="14.0" />
          </font>
       </TextField>
-      <Line endX="100.0" fill="#e3f2fd" layoutX="199.0" layoutY="308.0" startX="-100.0" stroke="#e3f2fd" />
-      <TextField fx:id="displayItem" layoutX="25.0" layoutY="390.0" onAction="#displayItem" prefHeight="29.0" prefWidth="201.0" />
-      <Button fx:id="deletItem" layoutX="277.0" layoutY="378.0" mnemonicParsing="false" onAction="#deletItem" prefHeight="46.0" prefWidth="55.0" style="-fx-background-color: #42A5F5;">
-         <graphic>
-            <ImageView fitHeight="43.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../icons/baseline_remove_circle_outline_white_48dp.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button fx:id="markItemAsDone" layoutX="227.0" layoutY="377.0" mnemonicParsing="false" onAction="#markItemAsDone" prefHeight="53.0" prefWidth="61.0" style="-fx-background-color: #42A5F5;">
-         <graphic>
-            <ImageView fitHeight="39.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../icons/baseline_check_circle_outline_white_48dp.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button fx:id="deleteEntireToDoList" layoutX="99.0" layoutY="482.0" mnemonicParsing="false" onAction="#deleteEntireToDoList" prefHeight="55.0" prefWidth="63.0" style="-fx-background-color: #42A5F5;">
-         <graphic>
-            <ImageView fitHeight="61.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../icons/baseline_delete_outline_white_48dp.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Text fill="WHITE" layoutX="101.0" layoutY="566.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Delete List">
+      <Line endX="180.0" fill="#e3f2fd" layoutX="181.0" layoutY="196.0" startX="-142.0" stroke="#e3f2fd" />
+      <TextField fx:id="displayItem" editable="false" layoutX="28.0" layoutY="578.0" prefHeight="29.0" prefWidth="201.0" />
+      <Text fill="WHITE" layoutX="38.0" layoutY="805.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Delete List">
          <font>
             <Font name="Century Gothic" size="15.0" />
          </font>
       </Text>
-      <Button fx:id="saveList" layoutX="244.0" layoutY="488.0" mnemonicParsing="false" onAction="#saveList" style="-fx-background-color: #42A5F5;">
-         <graphic>
-            <ImageView fitHeight="49.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../icons/baseline_favorite_border_white_48dp.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Text fill="WHITE" layoutX="246.0" layoutY="565.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Save List">
+      <Text fill="WHITE" layoutX="301.0" layoutY="804.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Save List">
          <font>
             <Font name="Century Gothic" size="15.0" />
          </font>
       </Text>
-      <Button fx:id="openEditItemPage" layoutX="330.0" layoutY="380.0" mnemonicParsing="false" onAction="#openEditItemPage" prefHeight="37.0" prefWidth="47.0" style="-fx-background-color: #42A5F5;">
-         <graphic>
-            <ImageView fitHeight="50.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../icons/baseline_edit_white_48dp.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button fx:id="displayAll" layoutX="32.0" layoutY="340.0" mnemonicParsing="false" onAction="#displayAll" text="display all " />
-      <Button fx:id="displayCompleted" layoutX="126.0" layoutY="340.0" mnemonicParsing="false" onAction="#displayCompleted" text="Display Completed" />
-      <Button fx:id="displayIncomplete" layoutX="272.0" layoutY="340.0" mnemonicParsing="false" onAction="#displayIncomplete" text="display incomplete" />
+      <Button fx:id="displayAll" layoutX="34.0" layoutY="640.0" mnemonicParsing="false" onAction="#displayAll" prefHeight="59.0" prefWidth="97.0" style="-fx-background-color: #ec407a;" text="Display All" textAlignment="JUSTIFY" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic Bold" size="14.0" />
+         </font></Button>
+      <Button fx:id="displayCompleted" layoutX="153.0" layoutY="640.0" mnemonicParsing="false" onAction="#displayCompleted" prefHeight="59.0" prefWidth="97.0" style="-fx-background-color: #ec407a;" text="Display Completed" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="Century Gothic Bold" size="14.0" />
+         </font></Button>
+      <Button fx:id="displayIncomplete" layoutX="273.0" layoutY="640.0" mnemonicParsing="false" onAction="#displayIncomplete" prefHeight="59.0" prefWidth="97.0" style="-fx-background-color: #ec407a;" text="Display Incomplete" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="Century Gothic Bold" size="14.0" />
+         </font></Button>
+      <Label alignment="CENTER" layoutX="24.0" layoutY="24.0" text="To Do List App" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic Bold" size="45.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="addNewItem" fitHeight="29.0" fitWidth="30.0" layoutX="343.0" layoutY="145.0" onMouseClicked="#addItem" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../icons/baseline_add_white_24dp.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="deleteList" fitHeight="61.0" fitWidth="85.0" layoutX="42.0" layoutY="731.0" onMouseClicked="#deleteList" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../icons/baseline_delete_outline_white_48dp.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="saveList" fitHeight="49.0" fitWidth="50.0" layoutX="304.0" layoutY="739.0" onMouseClicked="#saveList" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../icons/baseline_favorite_border_white_48dp.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="itemDone" fitHeight="39.0" fitWidth="41.0" layoutX="237.0" layoutY="573.0" onMouseClicked="#checkItemDone" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../icons/baseline_check_circle_outline_white_48dp.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="deleteItem" fitHeight="43.0" fitWidth="45.0" layoutX="283.0" layoutY="571.0" onMouseClicked="#deleteItem" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../icons/baseline_remove_circle_outline_white_48dp.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="editItem" fitHeight="50.0" fitWidth="39.0" layoutX="334.0" layoutY="573.0" onMouseClicked="#editItem" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../icons/baseline_edit_white_48dp.png" />
+         </image>
+      </ImageView>
+      <ListView fx:id="itemListView" layoutX="26.0" layoutY="220.0" onMouseClicked="#chooseItem" prefHeight="326.0" prefWidth="353.0" />
+      <ImageView fx:id="help" fitHeight="35.0" fitWidth="35.0" layoutX="351.0" layoutY="41.0" onMouseClicked="#showHelp" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../icons/help.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="sort" fitHeight="61.0" fitWidth="85.0" layoutX="176.0" layoutY="731.0" onMouseClicked="#sortItems" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../icons/sort.png" />
+         </image>
+      </ImageView>
+      <Text fill="WHITE" layoutX="195.0" layoutY="806.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sort">
+         <font>
+            <Font name="Century Gothic" size="15.0" />
+         </font>
+      </Text>
+      <Line endX="180.0" fill="#e3f2fd" layoutX="180.0" layoutY="713.0" startX="-142.0" stroke="#e3f2fd" />
    </children>
 </AnchorPane>

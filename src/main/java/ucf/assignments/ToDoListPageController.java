@@ -5,204 +5,322 @@
 
 package ucf.assignments;
 
+
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.skin.VirtualFlow;
+import javafx.scene.image.ImageView;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 
-public class ToDoListPageController {
-
-    public void modifyListName(ActionEvent actionEvent) {
-
-        //this method will receive the new list desc from modifyListName filed in toDoListPage GUI
-        // and sets the new desc for the List using setters in the To Do class
-        // String newDesc = current value in modifyListName field in in toDoListPag GUI
-        // if newDesc != ""
-        // ToDoDescription textfield == newDesc
-    }
-
+public class ToDoListPageController implements Initializable {
 
     @FXML
-
-    public void addItemName(ActionEvent actionEvent) {
-
-        // this method will create a new item object
-        //String itemDesc = current value in additemName field
-        //if  itemDesc != ""
-        // instantiate a item Object   -> Item item = new Item
-        // Use setter in Item class to set the description
-        // Item.setItemDescription(String newDesc);
-
-    }
+    private TextField itemName ;
     @FXML
-
-    public void addItemDueDate(ActionEvent actionEvent) {
-
-        // this method will create a new due date for an already existing item object
-        // Date newDueDate = current value in addItemDueDate date field
-        // if newDueDate != ""
-        // Item.DueDate == new DueDate
-    }
+    private DatePicker itemDueDate ;
     @FXML
-
-    public void displayItem (ActionEvent actionEvent) {
-
-        //const ItemInput == queryselector from our item input
-        // const ItemAddButton == queryselector from the add button on ToDoList Controller
-        // const ItemList == append each item we create to next one for viewing -> queryselector item List
-        // create a div class Item-containter
-        // use ul class pass array of Itemlist on to it
-        // the container will have some li so that each itemlist will have the button
-        // to open to the new page
-    }
+    private ListView<Item> itemListView ;
     @FXML
+    private TextField displayItem ;
 
-    public void deletItem(ActionEvent actionEvent) {
-
-        //this method will delete an item from a To Do list
-        // create a trash button that changes the boolean value of each item to True
-        //create a const element -> document.createElement('trash')
-        // then we'll append the button action to the Item -> ItemDiv.AppendChild
-        //deletItemFromToDo (Item)
-    }
-
-    public void deletItemFromToDo (Item item){
-
-        // check the array of items in the Item List
-        //console.log(Item List)
-        //we will get the index of Item
-        // Splice the Item Array by 1 -> Splice , ToDoList, 1
-        // Update Json file -> localStrorage.setItem("ToDo -> List of items", Jason.Stringfy(ToDo)
-
-    }
-    @FXML
-
-    public void markItemAsDone(ActionEvent actionEvent) {
-
-        // create a check mark button that changes the boolean value of each item to True
-        //create a const element -> document.createElement('checked')
-        // then we'll append the button action to the Item -> ItemDiv.AppendChild
-
-    }
-
-
-    @FXML
-
-    public void deleteEntireToDoList(ActionEvent actionEvent) {
-
-        // check the array of items in the ToDo Array
-        //console.log(ToDO)
-        //we will get the indext of To Do
-        // Splice the ToDoA Array by 1 -> Splice , ToDoList, 1
-        // Update Json file -> localStrorage.setItem("todos", Jason.Stringfy(ToDo)
-
-
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // create a list of item objects
+        List<Item> items = loadItems();
+        if(items != null){
+            itemListView.getItems().addAll(items);
+        }
     }
 
     @FXML
+    // addItem method
+    public void addItem(){
+        String description = itemName.getText().trim();  // in case of extra spaces, trim the text so its fits
 
-    public void addItemtoList(ActionEvent actionEvent) {
+        // handling the case if the user does not enter a description give them an error
+        if(description.isEmpty()){
+            showErrorAlert("Error", "Please enter a valid item name.");
+            return;
+        }
+        //handle the length requirement.
+        // check if length is  more than 256 chars display an error
+        if(description.length() > 256){
+            showErrorAlert("Error", "Max description length is 256.");
+            return;
+        }
+        // formatting date YYYY-MM-DD
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        LocalDate localDate = itemDueDate.getValue();
+        // handle the case if the user does not enter a date
+        if(localDate == null){
+            showErrorAlert("Error", "Please select a valid due date.");
+            return;
+        }
+        Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+        Date date = Date.from(instant);
+        String due_date = formatDate.format(date);
 
-        // this method uses the addItemName and addItemDueDate functions to create a new item object and
-        // add it to list item Array
-        //
+        Item item = new Item();
+        item.setItemDescription(description);
+        item.setDueDate(due_date);
+        item.setItemDone(false);
+
+        //check item list capacity each time before adding an item
+
+        if(itemListView.getItems().size() >= 100){
+            showErrorAlert("Error", "Maximum item capacity is 100.\nYou can not add anymore items.");
+            return;
+        }
+        itemListView.getItems().add(item);
+
+        //ready to enter new item
+        itemName.setText("");
+    }
+    @FXML
+    // choosing an item method
+
+    public void chooseItem(){
+        Item selected_item = itemListView.getSelectionModel().getSelectedItem();
+        if(selected_item == null) return;
+        displayItem.setText(selected_item.getItemDescription());  // show the selected item in the display window
     }
     @FXML
 
-    public void saveList(ActionEvent actionEvent) {
+    // deleting an entire list and starting a new list
 
-        // this method will save the to do list
-        //String toDoDesc = current value in getNameOfToDoList field
-        //if toDoDesc != ""
-        // instantiate a To Do Object   -> To Do list = new To Do
-        // Use setter in To Do class to set the
-        // list.setToDoDescription(newDesc)
-        // <input type ="text" class="ToDo>
-       // SaveLocalStirage(todo)
-
-
+    public void deleteList(){
+        itemListView.getItems().clear();
+        itemListView.refresh();
+        List<Item> items = new ArrayList<>();
+        saveItemList(items);
     }
 
-    public void SaveLocalStirage(ToDo todo){
-
-        // check if we have anything in the saved list or not
-        //if we have the list in local storage create an empty ToDO list
-        // if (localStorage.getItem(ToDO) == NULL -> create a ToDo List
-        // else get the ToDos from JSON.Parse.LocalStorage.getitem(ToDo)
-        // after wards ToDo.push(todo)
-        //afterwards push it back to the Json Storage -> localStorage.setItem(TODO, Json.Stringfy(TODO)
-    }
-
+    // checkmark function for itemDone
     @FXML
-
-    public void displayOptions(ActionEvent actionEvent) {
-        ///this function will let user pick among 4 options
-        // completed
-        // incomepleted
-        // sorted
-
-
+    public void checkItemDone(){
+        int index = itemListView.getSelectionModel().getSelectedIndex();
+        if(index < 0) return;
+        if(itemListView.getItems().get(index).getItemDone()){
+            itemListView.getItems().get(index).setItemDone(false);
+        }else {
+            itemListView.getItems().get(index).setItemDone(true);
+        }
+        itemListView.refresh();
     }
-    @FXML
-    public void openEditItemPage(ActionEvent actionEvent) throws IOException {
 
-        // this method is to open new window for editItemPage
+    // delete one item function
+    @FXML
+    public void deleteItem(){
+        int index = itemListView.getSelectionModel().getSelectedIndex();
+        if(index < 0) return;
+        itemListView.getItems().remove(index);
+    }
+
+    // edit item window opening function
+    @FXML
+    public void editItem() throws Exception{
+        Item item = itemListView.getSelectionModel().getSelectedItem();
+        if(item == null) return;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("EditItemPage.fxml"));
         Parent root1 = (Parent) fxmlLoader.load();
+
+        EditItemPageController controller = fxmlLoader.getController();
+        controller.setItem(item);
+
         Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setTitle("EditItemPage");
+        stage.setTitle("Edit Item Page");
+        stage.setResizable(false);
         stage.setScene(new Scene(root1));
-        stage.show();
+        stage.showAndWait();
+        itemListView.refresh();
+        displayItem.setText(item.getItemDescription());
     }
 
-    public void displayAll(ActionEvent actionEvent) throws IOException {
-//        // this method is to open new window for DisplayAll page
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("displayAll.fxml"));
+    // saving an entire list function
+    @FXML
+    public void saveList() {
+        List<Item> items = new ArrayList<>(itemListView.getItems());
+        saveItemList(items);
+    }
 
+
+    // displayAll page opener function
+    @FXML
+    public void displayAll() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("displayItems.fxml"));
         Parent root1 = (Parent) fxmlLoader.load();
+
+        DisplayController controller = fxmlLoader.getController();
+        controller.loadItems(itemListView.getItems());
+
         Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setTitle("displayAll");
+        stage.setTitle("Display All Window");
         stage.setScene(new Scene(root1));
+        stage.setResizable(false);
         stage.show();
     }
-
+    @FXML
     public void displayCompleted(ActionEvent actionEvent) throws IOException {
-        // this method is to open new window for diplaycompleteditem page
+        // this method is to open new window to display incomplete list
+        // Creat a List of items
+        List<Item> complete_items = new ArrayList<>();
 
+        // loop through the item list view, whenever item is done is true add it to the complete list
+        for(Item item : itemListView.getItems()){
+            if(item.getItemDone()){
+                complete_items.add(item);
+            }
+        }
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("displayCompleted.fxml"));
+        // completed items list is now available
+        // open the DisplayItems Page
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("displayItems.fxml"));
         Parent root1 = (Parent) fxmlLoader.load();
+
+        DisplayController controller = fxmlLoader.getController();
+        controller.loadItems(complete_items);
+
         Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setTitle("displayCompleted");
+        stage.setTitle("Display Complete Window");
         stage.setScene(new Scene(root1));
+        stage.setResizable(false);
         stage.show();
     }
+    @FXML
+    public void displayIncomplete() throws IOException {
+        // this method is to open new window for display  incomplete list
+        // create a new List of Items
+        List<Item> incomplete_items = new ArrayList<>();
 
-    public void displayIncomplete(ActionEvent actionEvent) throws IOException {
-        // this method is to open new window for siplay incomplete list
+        // loop through the list and see when getitemdone is ->false
+        // when false, add it to the incomplete list
+        for(Item item : itemListView.getItems()){
+            if(!item.getItemDone()){
+                incomplete_items.add(item);
+            }
+        }
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("displayIncompletedList.fxml"));
+        // incomeplete list is completed
+        // open the display window to show the incomplete list
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("displayItems.fxml"));
         Parent root1 = (Parent) fxmlLoader.load();
+
+        DisplayController controller = fxmlLoader.getController();
+        controller.loadItems(incomplete_items);
+
         Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setTitle("displayIncompletedList");
+        stage.setTitle("Display Incomplete Window");
         stage.setScene(new Scene(root1));
+        stage.setResizable(false);
         stage.show();
-
-
     }
+    @FXML
+
+    // Help window opener function
+
+    private void showHelp() throws Exception{
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("help.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+
+        Stage stage = new Stage();
+        stage.setTitle("Help");
+        stage.setScene(new Scene(root1));
+        stage.setResizable(false);
+        stage.show();
+    }
+    @FXML
+
+    // error message method
+    private void showErrorAlert(String title, String text){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(text);
+        alert.showAndWait();
+    }
+    @FXML
+
+    // successful message alert
+    private void showSuccessAlert(String title, String text){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setContentText(text);
+        alert.showAndWait();
+    }
+
+    @FXML
+
+    //comparator for dates
+    public void sortItems(){
+        itemListView.getItems().sort((item1,item2)->{
+            if(item1.equals(item2)) return 0;
+            if(item1.getDueDate().compareTo(item2.getDueDate()) > 0)
+                return 1;
+            else
+                return 0;
+        });
+    }
+
+    @FXML
+
+    // saving item list
+
+    public void saveItemList(List<Item> item_list){
+        try{
+            File dataBasefolder = new File("Database/");
+            if(!dataBasefolder.exists()){
+                dataBasefolder.mkdir();
+            }
+            FileOutputStream fileOutput1 = new FileOutputStream("Database/items");
+            ObjectOutputStream objectInput1 = new ObjectOutputStream(fileOutput1);
+            // Write item objects to the o file
+            objectInput1.writeObject(item_list);
+            objectInput1.close();
+            fileOutput1.close();
+            showSuccessAlert("Successful", "Items are successfully saved.");
+        }catch (Exception e){
+            e.printStackTrace();
+            showErrorAlert("Error", "Fail to save items.");
+        }
+    }
+    @FXML
+
+    // load items from the saved list
+
+    public List<Item> loadItems(){
+        try{
+            FileInputStream fileInput = new FileInputStream("Database/items");
+            ObjectInputStream objectInput = new ObjectInputStream(fileInput);
+
+            // Read objects
+            List<Item> items = (List<Item>) objectInput.readObject();
+            objectInput.close();
+            fileInput.close();
+
+            return items;
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+
 }
+

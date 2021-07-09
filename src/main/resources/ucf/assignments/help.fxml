@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="450.0" style="-fx-background-color: #42A5F5;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucf.assignments.HelpController">
+    <children>
+        <TextArea fx:id="helpView" editable="false" layoutX="35.0" layoutY="72.0" prefHeight="564.0" prefWidth="381.0" wrapText="true">
+            <font>
+                <Font name="SansSerif Regular" size="14.0" />
+            </font>
+        </TextArea>
+      <Label layoutX="134.0" layoutY="14.0" text="Help Page" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic" size="36.0" />
+         </font>
+      </Label>
+    </children>
+</AnchorPane>

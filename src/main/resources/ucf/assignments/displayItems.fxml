@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="displayAll" prefHeight="600.0" prefWidth="365.0" style="-fx-background-color: #42A5F5;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucf.assignments.DisplayController">
+    <children>
+        <ListView fx:id="dispplayAllitems" layoutX="33.0" layoutY="83.0" prefHeight="435.0" prefWidth="299.0" />
+    </children>
+</AnchorPane>
