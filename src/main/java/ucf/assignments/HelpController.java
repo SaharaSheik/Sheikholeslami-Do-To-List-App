@@ -34,7 +34,8 @@ public class HelpController implements Initializable {
                 "6. User can save all items by clicking the heart button at the bottom of the screen.\n\n" +
                 "7. User can delete all items by clicking on the trashcan button at the bottom of the screen.\n\n" +
                 "8. User can sort the item list by due date by clicking the sort button at the bottom of the screen.\n\n"+
-                "9. Error screens will be displayed if:\n"+
+                "9. User can display all items, completed items and incomplete item respectively by clicking on the pink buttons on the screen.\n\n"+
+                "10. Error screens will be displayed if:\n"+
                 "\tan item is missing due date\n" +
                 "\tan item is missing description\n" +
                 "\tan item's description exceeds 256 character limit\n" +
