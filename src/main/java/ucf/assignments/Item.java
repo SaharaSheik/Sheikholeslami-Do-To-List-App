@@ -34,15 +34,17 @@ public class Item implements Serializable {
         this.itemDescription = itemDescription;
     }
 
-    public String getDueDate() {
-        return dueDate;
-    }
-
     public void setDueDate(String dueDate) {
         // use keyword this. to set the due date from date filed addItemDueDate GUI
         // this.dueDate == dueDate in ToDoListPage
         this.dueDate = dueDate;
     }
+
+    public String getDueDate() {
+        return dueDate;
+    }
+
+
 
     public void setItemDone(Boolean itemDone) {
         // use keyword this. to set the itemDone from markItemAsDone button in  ToDoListPage GUI

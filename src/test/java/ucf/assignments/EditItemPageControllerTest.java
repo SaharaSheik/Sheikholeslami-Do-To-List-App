@@ -13,6 +13,7 @@ class EditItemPageControllerTest {
 
     protected static Item item = new Item();
     protected static String dueDate = "2021-07-09";
+    EditItemPageController editItemPageController = new EditItemPageController();
 
 
 
@@ -73,7 +74,8 @@ class EditItemPageControllerTest {
 
         String acceptableString = "Acceptable item description shall not exceed 256 chars";
 
-      boolean result = new EditItemPageController().descriptionChecker(emptyString);
+      boolean result = editItemPageController.descriptionChecker(emptyString);
+      Assertions.assertTrue(result);
 
 
     }
