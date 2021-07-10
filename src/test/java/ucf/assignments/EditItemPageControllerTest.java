@@ -1,30 +1,52 @@
 package ucf.assignments;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.text.ParseException;
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class EditItemPageControllerTest {
 
-    @Test
-    void changeItemDueDate() {
+    protected static Item item = new Item();
+    protected static String dueDate = "2021-07-09";
 
-        // we can create a test function for this testing which receives the modified DueDate for the item
-        // then it can examine it to see if it was returned in the correct format of a date
+    @Test
+    void dateFormatter() throws ParseException {
+
+        // I expect the dateFormatter to return a localDate type formatted in YYYY-MM-DD
+
+        item.setDueDate(dueDate);
+        LocalDate localDate = new EditItemPageController().dateFormatter(item);
+       // convert localDate to String
+        String dateToString = localDate.toString();
+
+        assertEquals(dateToString, dueDate);
 
     }
 
     @Test
-    void getItemDescription() {
-
-        //we can check the String Description, against of the created Item
-        // Assert.Euqal(Desc.equal("Item.Description)
+    void setItem() {
     }
 
     @Test
-    void editItemDescription() {
-
-        // we can create tester function for this to check if the new Item Description is not equal to the old one
-        //Asser.NotEqual
+    void saveItem() {
     }
+
+    @Test
+    void dueDateGetter (){
+
+        // I expect the value of localDate now converted into String will be equal to the value returned from
+        // dueDateGetter function
+
+        LocalDate localDate = LocalDate.now();
+
+        String due_date = new EditItemPageController().dueDateGetter(localDate);
+
+        Assertions.assertTrue(due_date.equals(localDate.toString()));
+
+    }
+
 }

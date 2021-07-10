@@ -57,6 +57,8 @@ class EditItemPageController {
 #Item item
 +initialize(URL url, ResourceBundle resourceBundle): void
 -loadItem() : void
++dateFormatter (Item item): LocalDate
++dueDateGetter(LocalDate localDate): String
 +setItem (Item item): void
 -showErrorAlert(String title, String text): void
 -showSuccessAlert(String title, String text): void

@@ -106,6 +106,7 @@ public class ToDoListPageController implements Initializable {
         itemListView.refresh();
         List<Item> items = new ArrayList<>();
         saveItemList(items);
+        showSuccessAlert("Successful", "All items are successfully deleted.");
     }
 
     // checkmark function for itemDone
@@ -176,7 +177,7 @@ public class ToDoListPageController implements Initializable {
     @FXML
     public void displayCompleted(ActionEvent actionEvent) throws IOException {
         // this method is to open new window to display incomplete list
-        // Creat a List of items
+        // Create a List of items
         List<Item> complete_items = new ArrayList<>();
 
         // loop through the item list view, whenever item is done is true add it to the complete list
