@@ -59,6 +59,7 @@ class EditItemPageController {
 -loadItem() : void
 +dateFormatter (Item item): LocalDate
 +dueDateGetter(LocalDate localDate): String
++descriptionChecker (String description): boolean
 +setItem (Item item): void
 -showErrorAlert(String title, String text): void
 -showSuccessAlert(String title, String text): void
@@ -72,7 +73,7 @@ class DisplayController {
 
 }
 class HelpController{
-#TextArea helpVie
+#TextArea helpView
 +initialize(URL url, ResourceBundle resourceBundle): void
 -loadHelp():void
 }

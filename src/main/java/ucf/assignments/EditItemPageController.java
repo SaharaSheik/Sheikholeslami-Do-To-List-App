@@ -38,14 +38,12 @@ public class EditItemPageController implements Initializable {
 
     }
     @FXML
-
     private void loadItem() throws ParseException {
 
             itemDescription.setText(item.getItemDescription());
             itemDate.setValue(dateFormatter(item));
 
             }
-
 
     // this test will receive an item, retrieve its due date
     // changes the due to he correct format and returns a local date in the form of what is available in the date picker
@@ -126,7 +124,10 @@ public class EditItemPageController implements Initializable {
         return due_date;
     }
 
-    public Boolean descriptionChecker (String description){
+
+// this method will check a description to confirm if 1) it is not empty 2) its length wont exceed 256 chars
+
+    public boolean descriptionChecker (String description){
 
 
         // check if the item entered is empty and if so, show an error message
@@ -142,6 +143,7 @@ public class EditItemPageController implements Initializable {
             showErrorAlert("Error", "Max item description length is 256.");
             return false;
         }
+
         return true;
     }
 

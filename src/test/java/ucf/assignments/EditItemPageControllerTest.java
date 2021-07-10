@@ -6,12 +6,17 @@ import org.junit.jupiter.api.Test;
 import java.text.ParseException;
 import java.time.LocalDate;
 
+import static java.lang.System.out;
 import static org.junit.jupiter.api.Assertions.*;
 
 class EditItemPageControllerTest {
 
     protected static Item item = new Item();
     protected static String dueDate = "2021-07-09";
+
+
+
+
 
     @Test
     void dateFormatter() throws ParseException {
@@ -49,4 +54,28 @@ class EditItemPageControllerTest {
 
     }
 
-}
+    @Test
+    void descriptionChecker() {
+
+        // I expect descriptionChecker method to :
+        // a) return false if the String passed to it is empty
+        // b) return false if the String length passed to it is exceeds 256 chars
+        // c) return true if the the String passed to it is not empty and less than 256 chars
+
+
+        String emptyString = "";
+        String longString = "javaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+
+        String acceptableString = "Acceptable item description shall not exceed 256 chars";
+
+      boolean result = new EditItemPageController().descriptionChecker(emptyString);
+
+
+    }
+
+    }
