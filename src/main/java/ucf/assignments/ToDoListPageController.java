@@ -89,13 +89,16 @@ public class ToDoListPageController implements Initializable {
         //ready to enter new item
         itemName.setText("");
     }
+
+
+
     @FXML
     // choosing an item method
 
     public void chooseItem(){
         Item selected_item = itemListView.getSelectionModel().getSelectedItem();
         if(selected_item == null) return;
-        displayItem.setText(selected_item.getItemDescription());  // show the selected item in the display window
+        displayItem.setText(selected_item.getItemDescription());  // show the selected item in the display window at the bottom
     }
     @FXML
 

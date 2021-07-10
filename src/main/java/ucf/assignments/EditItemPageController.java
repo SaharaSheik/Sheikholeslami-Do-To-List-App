@@ -147,7 +147,7 @@ public class EditItemPageController implements Initializable {
         return true;
     }
 
-    // error message
+    // error message function
     private void showErrorAlert(String title, String text){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -155,7 +155,7 @@ public class EditItemPageController implements Initializable {
         alert.showAndWait();
     }
 
-    // successful message
+    // successful message function
     private void showSuccessAlert(String title, String text){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
