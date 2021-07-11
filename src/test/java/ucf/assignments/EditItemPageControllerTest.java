@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Summer 2021 Assignment 4 Solution
+ *  Copyright 2021 Sahar Sheikholeslami
+ */
+
 package ucf.assignments;
 
 import org.junit.jupiter.api.Assertions;
@@ -68,26 +73,28 @@ class EditItemPageControllerTest {
     void descriptionChecker() {
 
 
-
-
-   // I expect descriptionChecker method to :
-        // a) return false if the String passed to it is empty
-        // b) return false if the String length passed to it is exceeds 256 chars
-        // c) return true if the the String passed to it is not empty and less than 256 chars
-
-        //test a
+        // I expect descriptionChecker method to :
+        // a) return 0 if the String passed to it is empty
+        // b) return -1 if the String length passed to it is exceeds 256 chars
+        // c) return 1 if the the String passed to it is not empty and less than 256 chars
 
 
 
-        //boolean resultA = editItemPageController.descriptionChecker(emptyString);
-        //System.out.println(resultA);
-        //Assertions.assertFalse(resultA);
-       boolean resultB = editItemPageController.descriptionChecker(longString);
-      //Assertions.assertTrue(resultB);
 
-      boolean resultC = editItemPageController.descriptionChecker(acceptableString);
-      Assertions.assertTrue(resultC);
-        System.out.println(resultB);
+        int resultA = editItemPageController.descriptionChecker(emptyString);
+
+        int resultB = editItemPageController.descriptionChecker(longString);
+
+        int resultC = editItemPageController.descriptionChecker(acceptableString);
+
+        //test a)
+        Assertions.assertEquals(0, resultA);
+
+        // test b)
+        Assertions.assertEquals(-1, resultB);
+
+        //test c)
+        Assertions.assertEquals(1, resultC);
     }
 
-    }
+}

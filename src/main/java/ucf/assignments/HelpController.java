@@ -28,13 +28,13 @@ public class HelpController implements Initializable {
     private void loadHelp(){
         String help = "1. This Application will automatically load all the previously saved items from the external storage during startup.\n\n" +
                 "2. user can add an item to the list by filling out an item description and choosing an item due date and pressing the \"+\" button on the screen.\n\n" +
-                "3. User can modify an item as \"complete\" or \"incomplete\" by clicking on the checkMark button\n\n "+
-                "4. User can remove an item from the list by clicking on the  \"-\" button\n\n" +
-                "5. User can edit an item's description or due date by clicking on \"edit\" button annotated by the \"pen\" symbol.\n\n" +
+                "3. User can modify an item as \"complete\" or \"incomplete\" by selecting the item first and then clicking on the checkMark button\n\n "+
+                "4. User can remove an item from the list by selecting the item first and then clicking on the  \"-\" button\n\n" +
+                "5. User can edit an item's description or due date by by selecting the item first and then clicking on \"edit\" button annotated by the \"pen\" symbol.\n\n" +
                 "6. User can save all items by clicking the heart button at the bottom of the screen.\n\n" +
                 "7. User can delete all items by clicking on the trashcan button at the bottom of the screen.\n\n" +
-                "8. User can sort the item list by due date by clicking the sort button at the bottom of the screen.\n\n"+
-                "9. User can display all items, completed items and incomplete item respectively by clicking on the pink buttons on the screen.\n\n"+
+                "8. User can sort all the items in the list by due date by clicking the sort button at the bottom of the screen.\n\n"+
+                "9. User can display all items, completed items and incomplete items respectively by clicking on the appropriate pink buttons on the screen.\n\n"+
                 "10. Error screens will be displayed if:\n"+
                 "\tan item is missing due date\n" +
                 "\tan item is missing description\n" +

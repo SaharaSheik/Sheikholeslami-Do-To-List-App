@@ -75,34 +75,25 @@ public class EditItemPageController implements Initializable {
         String description = itemDescription.getText().trim();
 
 
-        if(!descriptionChecker(description))
-            return;
-/*
-        // check if the item entered is empty and if so, show an error message
-
-        if(description.isEmpty()){
-            showErrorAlert("Error", "Please enter a valid item name.");
+        if(descriptionChecker(description)==0) {
+            showErrorAlert("Error", "Please enter a valid item description.");
             return;
         }
 
-        // check if the item entered length is outside 256 char limit and if so show an error message
-
-        if(description.length() > 256){
-            showErrorAlert("Error", "Max description length is 256.");
+        if(descriptionChecker(description)==-1) {
+            showErrorAlert("Error", "Max item description length is 256.");
             return;
         }
-*/
+
         // if item description matches the format check the due date
 
-        //SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         LocalDate localDate = itemDate.getValue();
+
+        // if date is empty show an error message
         if(localDate == null){
             showErrorAlert("Error", "Please select a valid due date.");
             return;
         }
-        //Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-        //Date date = Date.from(instant);
-       // String due_date = ft.format(date);
 
         String due_date = dueDateGetter(localDate);
         item.setItemDescription(description);
@@ -127,24 +118,23 @@ public class EditItemPageController implements Initializable {
 
 // this method will check a description to confirm if 1) it is not empty 2) its length wont exceed 256 chars
 
-    public boolean descriptionChecker (String description){
+    public int descriptionChecker (String description){
 
 
-        // check if the item entered is empty and if so, show an error message
+        // check if the item entered is empty and if so return 0 to show an error message
 
         if(description.isEmpty()){
-            showErrorAlert("Error", "Please enter a valid item description.");
-            return false;
+            return 0;
         }
 
-        // check if the item entered length is outside 256 char limit and if so show an error message
+        // check if the item entered length is outside 256 char limit and if so return -1 and show an error message
 
         if(description.length() > 256){
-            showErrorAlert("Error", "Max item description length is 256.");
-            return false;
+            return -1;
         }
 
-        return true;
+        // if none of the above applies that means description is acceptable -> return 1
+        return 1;
     }
 
     // error message function

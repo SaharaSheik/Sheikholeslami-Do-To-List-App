@@ -37,6 +37,8 @@ class ToDoListPageController {
 +editItem(): void
 +saveList(): void
 +displayAll(): void
++dueDateGetter(LocalDate localDate): String
++descriptionChecker (String description): int
 +displayCompleted(ActionEvent actionEvent): void
 +displayIncomplete(): void
 -showHelp(): void
@@ -44,7 +46,7 @@ class ToDoListPageController {
 -showSuccessAlert(String title, String text): void
 +sortItems(): void
 +saveItemList(List<Item> item_list): void
-+oadItems(): List<Item>
++loadItems(): List<Item>
 
 
 }
@@ -59,7 +61,7 @@ class EditItemPageController {
 -loadItem() : void
 +dateFormatter (Item item): LocalDate
 +dueDateGetter(LocalDate localDate): String
-+descriptionChecker (String description): boolean
++descriptionChecker (String description): int
 +setItem (Item item): void
 -showErrorAlert(String title, String text): void
 -showSuccessAlert(String title, String text): void

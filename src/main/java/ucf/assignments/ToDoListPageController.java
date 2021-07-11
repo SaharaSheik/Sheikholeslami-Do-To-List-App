@@ -37,7 +37,7 @@ public class ToDoListPageController implements Initializable {
     private TextField displayItem ;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         // create a list of Item objects
         List<Item> items = loadItems();
         if(items != null){
@@ -48,35 +48,38 @@ public class ToDoListPageController implements Initializable {
     @FXML
     // addItem method
     public void addItem(){
-        String description = itemName.getText().trim();  // in case of extra spaces, trim the text so its fits
+        // in case of extra spaces, trim the text so its fits within 256 char requirement
+        String description = itemName.getText().trim();
 
-        // handling the case if the user does not enter a description give them an error
-        if(description.isEmpty()){
-            showErrorAlert("Error", "Please enter a valid item name.");
+        if(descriptionChecker(description)==0) {
+            showErrorAlert("Error", "Please enter a valid item description.");
             return;
         }
-        //handle the length requirement.
-        // check if length is  more than 256 chars display an error
-        if(description.length() > 256){
-            showErrorAlert("Error", "Max description length is 256.");
+
+        if(descriptionChecker(description)==-1) {
+            showErrorAlert("Error", "Max item description length is 256.");
             return;
         }
+
+
         // formatting date YYYY-MM-DD
-        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         LocalDate localDate = itemDueDate.getValue();
+
+
         // handle the case if the user does not enter a date
         if(localDate == null){
             showErrorAlert("Error", "Please select a valid due date.");
             return;
         }
-        Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-        Date date = Date.from(instant);
-        String due_date = formatDate.format(date);
+
+
+        String due_date = dueDateGetter(localDate);
 
         Item item = new Item();
         item.setItemDescription(description);
         item.setDueDate(due_date);
         item.setItemDone(false);
+
 
         //check item list capacity each time before adding an item
 
@@ -84,21 +87,60 @@ public class ToDoListPageController implements Initializable {
             showErrorAlert("Error", "Maximum item capacity is 100.\nYou can not add anymore items.");
             return;
         }
+
         itemListView.getItems().add(item);
 
-        //ready to enter new item
+        //clear the itemName field in GUI to be ready to enter new item
         itemName.setText("");
     }
 
 
 
+
+// this method will check a description to confirm if 1) it is not empty 2) its length wont exceed 256 chars
+    // it returns 0 if empty
+    // it return -1 if 256 chars+
+    // it return 1 if neither which means the description was acceptable
+
+    public int descriptionChecker (String description){
+
+
+        // check if the item entered is empty and if so, show an error message
+
+        if(description.isEmpty()){
+            return 0;
+        }
+
+        // check if the item entered length is outside 256 char limit and if so show an error message
+
+        if(description.length() > 256){
+            return -1;
+        }
+
+        return 1;
+    }
+
+    //this item will sey the due date and turns it into a string formatted in YYYY-MM-DD
+
+    public String dueDateGetter(LocalDate localDate){
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+        Date date = Date.from(instant);
+        String due_date = dateFormat.format(date);
+
+        return due_date;
+    }
+
+
     @FXML
-    // choosing an item method
+    // choosing an item to show the result in the display text field
 
     public void chooseItem(){
         Item selected_item = itemListView.getSelectionModel().getSelectedItem();
-        if(selected_item == null) return;
-        displayItem.setText(selected_item.getItemDescription());  // show the selected item in the display window at the bottom
+        if(selected_item == null)
+            return;
+        displayItem.setText(selected_item.getItemDescription());  // show the selected item in the display text filed at the bottom
     }
     @FXML
 
@@ -108,39 +150,52 @@ public class ToDoListPageController implements Initializable {
         itemListView.getItems().clear();
         itemListView.refresh();
         List<Item> items = new ArrayList<>();
-        saveItemList(items);
-        showSuccessAlert("Successful", "All items are successfully deleted.");
+        if(saveItemList(items)){
+            showSuccessAlert("Successful", "All items are successfully deleted.");
+        }
+
     }
 
-    // checkmark function for itemDone
+    // checkmark function for itemDone and not done
     @FXML
     public void checkItemDone(){
         int index = itemListView.getSelectionModel().getSelectedIndex();
-        if(index < 0) return;
+        if(index < 0)
+            return;
+        // if the item has itemDone value of true , change that to false
         if(itemListView.getItems().get(index).getItemDone()){
             itemListView.getItems().get(index).setItemDone(false);
+
+            //otherwise, meaning if the getItemDone value is false, change it to true
         }else {
             itemListView.getItems().get(index).setItemDone(true);
         }
+        //refresh the list view to show the correct status of item done
         itemListView.refresh();
     }
 
     // delete one item function
     @FXML
     public void deleteItem(){
+        //find the index of the selected item from the itemsListView
         int index = itemListView.getSelectionModel().getSelectedIndex();
-        if(index < 0) return;
+        if(index < 0)
+            return;
+
+        //remove the item at the selected index
         itemListView.getItems().remove(index);
     }
 
-    // edit item window opening function
+    // editItem Page opening function
     @FXML
     public void editItem() throws Exception{
+
         Item item = itemListView.getSelectionModel().getSelectedItem();
-        if(item == null) return;
+        if(item == null)
+            return;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("EditItemPage.fxml"));
-        Parent root1 = (Parent) fxmlLoader.load();
+        Parent root1 =  fxmlLoader.load();
 
         EditItemPageController controller = fxmlLoader.getController();
         controller.setItem(item);
@@ -158,7 +213,10 @@ public class ToDoListPageController implements Initializable {
     @FXML
     public void saveList() {
         List<Item> items = new ArrayList<>(itemListView.getItems());
-        saveItemList(items);
+        if(saveItemList(items)){
+            showSuccessAlert("Successful", "All items are successfully saved.");
+        }
+
     }
 
 
@@ -166,7 +224,7 @@ public class ToDoListPageController implements Initializable {
     @FXML
     public void displayAll() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("displayItems.fxml"));
-        Parent root1 = (Parent) fxmlLoader.load();
+        Parent root1 = fxmlLoader.load();
 
         DisplayController controller = fxmlLoader.getController();
         controller.loadItems(itemListView.getItems());
@@ -179,21 +237,16 @@ public class ToDoListPageController implements Initializable {
     }
     @FXML
     public void displayCompleted(ActionEvent actionEvent) throws IOException {
-        // this method is to open new window to display incomplete list
+        // this method opens new window to display complete list
         // Create a List of items
-        List<Item> complete_items = new ArrayList<>();
 
-        // loop through the item list view, whenever item is done is true add it to the complete list
-        for(Item item : itemListView.getItems()){
-            if(item.getItemDone()){
-                complete_items.add(item);
-            }
-        }
+        List<Item> complete_items = completeAndIncompleteArrayMaker(true, itemListView);
+
 
         // completed items list is now available
         // open the DisplayItems Page
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("displayItems.fxml"));
-        Parent root1 = (Parent) fxmlLoader.load();
+        Parent root1 = fxmlLoader.load();
 
         DisplayController controller = fxmlLoader.getController();
         controller.loadItems(complete_items);
@@ -208,21 +261,14 @@ public class ToDoListPageController implements Initializable {
     public void displayIncomplete() throws IOException {
         // this method is to open new window for display  incomplete list
         // create a new List of Items
-        List<Item> incomplete_items = new ArrayList<>();
+        List<Item> incomplete_items = completeAndIncompleteArrayMaker(false, itemListView);
 
-        // loop through the list and see when getitemdone is ->false
-        // when false, add it to the incomplete list
-        for(Item item : itemListView.getItems()){
-            if(!item.getItemDone()){
-                incomplete_items.add(item);
-            }
-        }
 
-        // incomeplete list is completed
+        // inComplete list is completed
         // open the display window to show the incomplete list
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("displayItems.fxml"));
-        Parent root1 = (Parent) fxmlLoader.load();
+        Parent root1 = fxmlLoader.load();
 
         DisplayController controller = fxmlLoader.getController();
         controller.loadItems(incomplete_items);
@@ -233,13 +279,66 @@ public class ToDoListPageController implements Initializable {
         stage.setResizable(false);
         stage.show();
     }
+
+    public List<Item> completeAndIncompleteArrayMaker (boolean x, ListView<Item> items) {
+        List<Item> listOfItems = new ArrayList<>();
+
+
+        if (x) {
+            // loop through the item list , whenever item is done is true add it to the complete list
+
+            for (Item item : items.getItems()) {
+                if (item.getItemDone()) {
+                    listOfItems.add(item);
+                }
+
+            }
+                return listOfItems;
+
+
+        }
+        // loop through the list and see when getitemdone is ->false
+        // when false, add it to the incomplete list
+
+        else {
+            for (Item item : items.getItems()) {
+                if (!item.getItemDone()) {
+                    listOfItems.add(item);
+                }
+            }
+        }
+
+        return listOfItems;
+
+    }
+
+    @FXML
+
+    // load items from the saved list
+
+    public List<Item> loadItems(){
+        try{
+            FileInputStream fileInput = new FileInputStream("Database/items");
+            ObjectInputStream objectInput = new ObjectInputStream(fileInput);
+
+            // Read objects
+            List<Item> items = (List<Item>) objectInput.readObject();
+            objectInput.close();
+            fileInput.close();
+
+            return items;
+        }catch (Exception e){
+            return null;
+        }
+    }
+
     @FXML
 
     // Help window opener function
 
     private void showHelp() throws Exception{
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("help.fxml"));
-        Parent root1 = (Parent) fxmlLoader.load();
+        Parent root1 = fxmlLoader.load();
 
         Stage stage = new Stage();
         stage.setTitle("Help");
@@ -268,7 +367,7 @@ public class ToDoListPageController implements Initializable {
 
     @FXML
 
-    //comparator for dates
+    //comparator for sorting the items based on their dates
     public void sortItems(){
         itemListView.getItems().sort((item1,item2)->{
             if(item1.equals(item2)) return 0;
@@ -283,7 +382,7 @@ public class ToDoListPageController implements Initializable {
 
     // saving item list
 
-    public void saveItemList(List<Item> item_list){
+    public boolean saveItemList(List<Item> item_list){
         try{
             File dataBasefolder = new File("Database/");
             if(!dataBasefolder.exists()){
@@ -291,35 +390,17 @@ public class ToDoListPageController implements Initializable {
             }
             FileOutputStream fileOutput1 = new FileOutputStream("Database/items");
             ObjectOutputStream objectInput1 = new ObjectOutputStream(fileOutput1);
-            // Write item objects to the o file
+            // Write item objects to the out file
             objectInput1.writeObject(item_list);
             objectInput1.close();
             fileOutput1.close();
-            showSuccessAlert("Successful", "Items are successfully saved.");
+            return true;
         }catch (Exception e){
             e.printStackTrace();
-            showErrorAlert("Error", "Fail to save items.");
+            return false;
         }
     }
-    @FXML
 
-    // load items from the saved list
-
-    public List<Item> loadItems(){
-        try{
-            FileInputStream fileInput = new FileInputStream("Database/items");
-            ObjectInputStream objectInput = new ObjectInputStream(fileInput);
-
-            // Read objects
-            List<Item> items = (List<Item>) objectInput.readObject();
-            objectInput.close();
-            fileInput.close();
-
-            return items;
-        }catch (Exception e){
-            return null;
-        }
-    }
 
 
 }
