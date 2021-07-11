@@ -150,7 +150,7 @@ public class ToDoListPageController implements Initializable {
         itemListView.getItems().clear();
         itemListView.refresh();
         List<Item> items = new ArrayList<>();
-        if(saveItemList(items)){
+        if(saveItemList(items, "Database/")){
             showSuccessAlert("Successful", "All items are successfully deleted.");
         }
 
@@ -166,7 +166,7 @@ public class ToDoListPageController implements Initializable {
         if(itemListView.getItems().get(index).getItemDone()){
             itemListView.getItems().get(index).setItemDone(false);
 
-            //otherwise, meaning if the getItemDone value is false, change it to true
+            //otherwise,  if the getItemDone value is false, change it to true
         }else {
             itemListView.getItems().get(index).setItemDone(true);
         }
@@ -213,7 +213,7 @@ public class ToDoListPageController implements Initializable {
     @FXML
     public void saveList() {
         List<Item> items = new ArrayList<>(itemListView.getItems());
-        if(saveItemList(items)){
+        if(saveItemList(items, "Database/")){
             showSuccessAlert("Successful", "All items are successfully saved.");
         }
 
@@ -235,12 +235,19 @@ public class ToDoListPageController implements Initializable {
         stage.setResizable(false);
         stage.show();
     }
+
+    // display completed opener function
     @FXML
     public void displayCompleted(ActionEvent actionEvent) throws IOException {
         // this method opens new window to display complete list
         // Create a List of items
 
-        List<Item> complete_items = completeAndIncompleteArrayMaker(true, itemListView);
+        List <Item> items = new ArrayList<>();
+        for(int i =0; i<itemListView.getItems().size(); i++) {
+            items.add(itemListView.getItems().get(i));
+        }
+
+        List<Item> complete_items = completeAndIncompleteArrayMaker(true, items);
 
 
         // completed items list is now available
@@ -257,11 +264,19 @@ public class ToDoListPageController implements Initializable {
         stage.setResizable(false);
         stage.show();
     }
+
+    //display incompleteList function
     @FXML
     public void displayIncomplete() throws IOException {
         // this method is to open new window for display  incomplete list
         // create a new List of Items
-        List<Item> incomplete_items = completeAndIncompleteArrayMaker(false, itemListView);
+
+        List <Item> items = new ArrayList<>();
+        for(int i =0; i<itemListView.getItems().size(); i++) {
+            items.add(itemListView.getItems().get(i));
+        }
+
+        List<Item> incomplete_items = completeAndIncompleteArrayMaker(false, items);
 
 
         // inComplete list is completed
@@ -280,16 +295,17 @@ public class ToDoListPageController implements Initializable {
         stage.show();
     }
 
-    public List<Item> completeAndIncompleteArrayMaker (boolean x, ListView<Item> items) {
+    public List<Item> completeAndIncompleteArrayMaker (boolean x, List <Item> items) {
+
         List<Item> listOfItems = new ArrayList<>();
 
-
         if (x) {
+            // if items done is true
             // loop through the item list , whenever item is done is true add it to the complete list
 
-            for (Item item : items.getItems()) {
-                if (item.getItemDone()) {
-                    listOfItems.add(item);
+        for (int i =0; i<items.size(); i++){
+                if (items.get(i).getItemDone()) {
+                    listOfItems.add(items.get(i));
                 }
 
             }
@@ -297,16 +313,20 @@ public class ToDoListPageController implements Initializable {
 
 
         }
+        // if x -> false, meaning items is not Done
         // loop through the list and see when getitemdone is ->false
         // when false, add it to the incomplete list
 
         else {
-            for (Item item : items.getItems()) {
-                if (!item.getItemDone()) {
-                    listOfItems.add(item);
+
+
+            for (int i =0; i<items.size(); i++) {
+                if (!items.get(i).getItemDone()) {
+                listOfItems.add(items.get(i));
                 }
             }
         }
+
 
         return listOfItems;
 
@@ -381,15 +401,18 @@ public class ToDoListPageController implements Initializable {
     @FXML
 
     // saving item list
+    // if saving was sucessfully done in "database return true otherwise return false
 
-    public boolean saveItemList(List<Item> item_list){
+    public boolean saveItemList(List<Item> item_list, String pathName){
         try{
-            File dataBasefolder = new File("Database/");
+
+            File dataBasefolder = new File(pathName);
             if(!dataBasefolder.exists()){
                 dataBasefolder.mkdir();
             }
             FileOutputStream fileOutput1 = new FileOutputStream("Database/items");
             ObjectOutputStream objectInput1 = new ObjectOutputStream(fileOutput1);
+
             // Write item objects to the out file
             objectInput1.writeObject(item_list);
             objectInput1.close();

@@ -9,6 +9,7 @@ import javafx.scene.control.ListView;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import javax.swing.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +20,7 @@ class ToDoListPageControllerTest {
 
     protected static Item item = new Item();
     protected static String dueDate = "2021-07-09";
-   // protected static ListView<Item> itemListView = new ListView<>();
-
+    // protected static ListView<Item> itemListView = new ListView<>();
 
 
     ToDoListPageController toDoListPageController = new ToDoListPageController();
@@ -36,14 +36,12 @@ class ToDoListPageControllerTest {
     String acceptableString = "Acceptable item description shall not exceed 256 chars";
 
 
-
     @Test
     void addItem() {
     }
 
     @Test
     void descriptionChecker() {
-
 
 
         // I expect descriptionChecker method to :
@@ -124,30 +122,61 @@ class ToDoListPageControllerTest {
 
     @Test
     void saveItemList() {
+
+        //create a list of item
+        List<Item> testItems = new ArrayList<Item>();
+        for (int i = 0; i < 5; i++) {
+
+            Item item = new Item();
+            testItems.add(item);
+
+        }
+
+        // I am expecting the saveItemList function to return true when a List of items and a path is given
+        // to it
+
+        boolean result = toDoListPageController.saveItemList(testItems, "TestDatabase/");
+
+        Assertions.assertTrue(result);
+
     }
 
 
     @Test
     void completeAndIncompleteArrayMaker() {
-        Item item1 = new Item();
-        item1.setItemDone(true);
+        //create a list of item of 10 items
 
-        Item item2 = new Item();
-        item2.setItemDone(false);
+        List<Item> testItems = new ArrayList<Item>();
+        for (int i = 0; i < 10; i++) {
 
-       // ListView<Item> itemListView = new ListView<>();
+            Item item = new Item();
+        // for the even index, set itemDone to true
+            if (i % 2 == 0)
+                item.setItemDone(true);
+            // for off index set itemDine to false
+            else
+                item.setItemDone(false);
 
-       // itemListView.getItems().add(item1);
-       // itemListView.getItems().add(item2);
+            testItems.add(item);
+        }
 
-        //System.out.println(itemListView.getItems().get(0).getItemDone());
+        // pass the Test Items Array to completeAndIncompleteArrayMaker and make complete and incomplete Item Lists
 
-        // I expect the indext 0, 2,4,6 -> have item checked as done
-        // I expcpect index 1,3,5 -> have items checked as notdone
-        //List<Item> complete_items = toDoListPageController.completeAndIncompleteArrayMaker(true, itemListView);
-        //List<Item> incomplete_items = toDoListPageController.completeAndIncompleteArrayMaker(false, itemListView);
+        List <Item> completed = toDoListPageController.completeAndIncompleteArrayMaker(true, testItems);
+        List<Item> notCompleted = toDoListPageController.completeAndIncompleteArrayMaker(false, testItems);
 
-        // Assertions.assertTrue(complete_items.get(0).getItemDone());
+        System.out.println(notCompleted.get(0).getItemDone());
+
+        // check if all items returned by completeAndIncompleteArrayMaker in the complete list have itemDone -> true
+
+        for (int i = 0; i <completed.size(); i++)
+            Assertions.assertTrue(completed.get(i).getItemDone());
+
+        // check if all items returned by completeAndIncompleteArrayMaker in the Incomplete list have itemDone -> false
+
+        for (int i = 0; i <notCompleted.size(); i++)
+        Assertions.assertFalse(notCompleted.get(i).getItemDone());
+
     }
 
 }

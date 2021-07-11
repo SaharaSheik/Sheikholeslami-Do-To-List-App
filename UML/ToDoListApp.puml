@@ -45,7 +45,7 @@ class ToDoListPageController {
 -showErrorAlert(String title, String text): void
 -showSuccessAlert(String title, String text): void
 +sortItems(): void
-+saveItemList(List<Item> item_list): void
++saveItemList(List<Item> item_list): boolean
 +loadItems(): List<Item>
 
 
