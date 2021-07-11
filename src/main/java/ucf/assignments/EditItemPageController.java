@@ -45,7 +45,7 @@ public class EditItemPageController implements Initializable {
 
             }
 
-    // this test will receive an item, retrieve its due date
+    // this function will receive an item, retrieve its due date
     // changes the due to he correct format and returns a local date in the form of what is available in the date picker
     // in the app
     public LocalDate dateFormatter (Item item) throws ParseException {
@@ -63,23 +63,29 @@ public class EditItemPageController implements Initializable {
 
     @FXML
 
+    //set item to the item that is passed to the function
+    //use load item to load the items
     public void setItem(Item item) throws ParseException {
         this.item = item;
         loadItem();
     }
+
     @FXML
     public void saveItem() {
 
-        // trim the blanks so we can count the num of chars for each description
+        // trim the blanks so we can count the num of chars for each description against the 256 requirement
 
         String description = itemDescription.getText().trim();
 
-
+        // check if the item description is blank using descriptionChecker function
+        // show error if it is
         if(descriptionChecker(description)==0) {
             showErrorAlert("Error", "Please enter a valid item description.");
             return;
         }
 
+        // check if the item description exceeds 256 chars using descriptionChecker function
+        // show error if it is
         if(descriptionChecker(description)==-1) {
             showErrorAlert("Error", "Max item description length is 256.");
             return;
@@ -95,21 +101,33 @@ public class EditItemPageController implements Initializable {
             return;
         }
 
+        // set due date using dueDateGetter converter
         String due_date = dueDateGetter(localDate);
+
+        // set the item using the description and date
         item.setItemDescription(description);
         item.setDueDate(due_date);
 
+
         Stage stage = (Stage) itemDate.getScene().getWindow();
+
+        // display success alert if the hit the use saves the item
         showSuccessAlert("Success", "Your item was successfully saved.");
         stage.close();
     }
 
-
+    // this function formats the t to the YYYY-MM-DD
     public String dueDateGetter(LocalDate localDate){
-
+            // create the desired pattern for the date
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+        // get the instant from local Date from Start of the day
         Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+
+        // create a date from the instant
         Date date = Date.from(instant);
+
+        // dateFormat style of dueDate using the date
         String due_date = dateFormat.format(date);
 
         return due_date;
@@ -139,6 +157,8 @@ public class EditItemPageController implements Initializable {
 
     // error message function
     private void showErrorAlert(String title, String text){
+
+        // type of this Alert is ERROR
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setContentText(text);
@@ -147,6 +167,8 @@ public class EditItemPageController implements Initializable {
 
     // successful message function
     private void showSuccessAlert(String title, String text){
+
+        //Type of this Alert is Informational, showing success of an operation
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setContentText(text);

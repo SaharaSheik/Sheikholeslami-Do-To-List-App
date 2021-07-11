@@ -47,13 +47,7 @@ class EditItemPageControllerTest {
 
     }
 
-    @Test
-    void setItem() {
-    }
 
-    @Test
-    void saveItem() {
-    }
 
     @Test
     void dueDateGetter (){

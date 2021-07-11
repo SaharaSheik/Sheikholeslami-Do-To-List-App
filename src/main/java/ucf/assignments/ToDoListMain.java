@@ -32,7 +32,6 @@ public class ToDoListMain extends Application {
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setTitle("To Do App");
-           // primaryStage.setResizable(false);
             primaryStage.show();
 
         } catch (IOException e) {

@@ -1,40 +1,17 @@
-
-/*
- *  UCF COP3330 Summer 2021 Assignment 4 Solution
- *  Copyright 2021 Sahar Sheikholeslami
- */
-
-
 package ucf.assignments;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.TextArea;
+import static org.junit.jupiter.api.Assertions.*;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-public class HelpController implements Initializable {
-
-    @FXML
-    TextArea helpView;
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadHelp();
-    }
-
-    private void loadHelp(){
-
-        String help=helpPageContent();
-        helpView.setText(help);
-    }
-
-    public String helpPageContent (){
+class HelpControllerTest {
 
 
-        String help = "1. This Application will automatically load all the previously saved items from the external storage during startup.\n\n" +
+    @Test
+    void helpPageContent() {
+
+        String expectedText= "1. This Application will automatically load all the previously saved items from the external storage during startup.\n\n" +
                 "2. user can add an item to the list by filling out an item description and choosing an item due date and pressing the \"+\" button on the screen.\n\n" +
                 "3. User can modify an item as \"complete\" or \"incomplete\" by selecting the item first and then clicking on the checkMark button\n\n "+
                 "4. User can remove an item from the list by selecting the item first and then clicking on the  \"-\" button\n\n" +
@@ -51,6 +28,14 @@ public class HelpController implements Initializable {
                 "\tmore than 100 items have been added to the list\n\n" +
                 "This page is dedicated to 'Ray' for his awesome idea! :) \n\n";
 
-        return help;
+
+        HelpController helpController = new HelpController();
+        String actualText = helpController.helpPageContent();
+
+        Assertions.assertTrue(actualText.equals(expectedText));
+
+
     }
+
+
 }

@@ -16,10 +16,14 @@ import javafx.scene.control.ListView;
 import java.util.List;
 
 public class DisplayController {
+
+    // this controller will display a lit of items based on the List of items that was passed on to it
+    //
     @FXML
     ListView<Item> dispplayAllitems;
 
-    public void loadItems(List<Item> items){
+    public void loadItems(List<Item> items)
+    {
         dispplayAllitems.getItems().addAll(items);
     }
 }
