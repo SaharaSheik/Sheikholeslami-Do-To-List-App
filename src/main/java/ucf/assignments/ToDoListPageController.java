@@ -369,38 +369,8 @@ public class ToDoListPageController implements Initializable {
         }
     }
 
-    @FXML
 
-    // Help window opener function
 
-    private void showHelp() throws Exception{
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("help.fxml"));
-        Parent root1 = fxmlLoader.load();
-
-        Stage stage = new Stage();
-        stage.setTitle("Help");
-        stage.setScene(new Scene(root1));
-        stage.setResizable(false);
-        stage.show();
-    }
-    @FXML
-
-    // error message method
-    private void showErrorAlert(String title, String text){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setContentText(text);
-        alert.showAndWait();
-    }
-    @FXML
-
-    // successful message alert
-    private void showSuccessAlert(String title, String text){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setContentText(text);
-        alert.showAndWait();
-    }
 
     @FXML
 
@@ -418,7 +388,7 @@ public class ToDoListPageController implements Initializable {
     @FXML
 
     // saving item list
-    // if saving was sucessfully done in "database return true otherwise return false
+    // if saving was successfully done in "database return true otherwise return false
 
     public boolean saveItemList(List<Item> item_list, String pathName){
         try{
@@ -440,6 +410,42 @@ public class ToDoListPageController implements Initializable {
             return false;
         }
     }
+
+    @FXML
+
+    // Help window opener function
+
+    private void showHelp() throws Exception{
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("help.fxml"));
+        Parent root1 = fxmlLoader.load();
+
+        Stage stage = new Stage();
+        stage.setTitle("Help");
+        stage.setScene(new Scene(root1));
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
+
+    // error message method
+    private void showErrorAlert(String title, String text){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(text);
+        alert.showAndWait();
+    }
+    @FXML
+
+    // successful message alert
+    private void showSuccessAlert(String title, String text){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setContentText(text);
+        alert.showAndWait();
+    }
+
+
 
 
 
