@@ -116,7 +116,8 @@ public class EditItemPageController implements Initializable {
         stage.close();
     }
 
-    // this function formats the t to the YYYY-MM-DD
+
+    // this function formats the date to the YYYY-MM-DD
     public String dueDateGetter(LocalDate localDate){
             // create the desired pattern for the date
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());

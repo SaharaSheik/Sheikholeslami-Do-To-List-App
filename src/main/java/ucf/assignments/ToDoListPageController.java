@@ -48,19 +48,24 @@ public class ToDoListPageController implements Initializable {
     @FXML
     // addItem method
     public void addItem(){
-        // in case of extra spaces, trim the text so its fits within 256 char requirement
+        // trim the blanks so we can count the num of chars for each description against the 256 requirement
         String description = itemName.getText().trim();
 
+
+        // check if the item description is blank using descriptionChecker function
+        // show error if it is
         if(descriptionChecker(description)==0) {
             showErrorAlert("Error", "Please enter a valid item description.");
             return;
         }
-
+        // check if the item description exceeds 256 chars using descriptionChecker function
+        // show error if it is
         if(descriptionChecker(description)==-1) {
             showErrorAlert("Error", "Max item description length is 256.");
             return;
         }
 
+        // if item description matches the format check the due date
 
         // formatting date YYYY-MM-DD
         LocalDate localDate = itemDueDate.getValue();
@@ -72,6 +77,7 @@ public class ToDoListPageController implements Initializable {
             return;
         }
 
+        // set due date using dueDateGetter converter
 
         String due_date = dueDateGetter(localDate);
 
@@ -124,9 +130,20 @@ public class ToDoListPageController implements Initializable {
 
     public String dueDateGetter(LocalDate localDate){
 
+        // create the desired pattern for the date
+
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        // get the instant from local Date from Start of the day
+
         Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+
+        // create a date from the instant
+
         Date date = Date.from(instant);
+
+        // dateFormat style of dueDate using the date
+
         String due_date = dateFormat.format(date);
 
         return due_date;
@@ -138,7 +155,7 @@ public class ToDoListPageController implements Initializable {
 
     public void chooseItem(){
         Item selected_item = itemListView.getSelectionModel().getSelectedItem();
-        if(selected_item == null)
+        if(selected_item == null) // if no item i selected return NULL
             return;
         displayItem.setText(selected_item.getItemDescription());  // show the selected item in the display text filed at the bottom
     }
